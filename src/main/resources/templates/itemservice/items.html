@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/itemservice/items.js}"></script>
+</head>
+<body>
+<div class="container" style="max-width: 2000px">
+    <div class="py-3 text-center">
+        <img th:src="@{/대원샵 로고.png}">
+        <h1>상품 목록</h1>
+    </div>
+    <div class="row">
+        <div class="container" style="max-width: 1200px">
+            <div class="col">
+                <a th:href="@{/}" style="text-align:left"> 홈으로 </a>
+            </div>
+            <div class="col">
+                <p th:text="|사용자명: ${memberName}|" style="text-align:right">로그인 사용자 이름</p>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="background-color:#cc0009">
+        <div class="container" style="max-width: 1200px">
+        <div class="col">
+            <button class="btn btn-primary float-start"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/items/add}'|"
+                    type="button" style="margin:10px">상품 등록</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary float-end" style="margin:10px"
+                    onclick='javascript:boardCheck("update");'>선택 상품 갱신</button>
+            <button class="btn btn-primary float-end" style="margin:10px"
+                    onclick='javascript:boardCheck("delete");'>선택 상품 삭제</button>
+        </div>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container" style="max-width: 1200px">
+        <table class="table">
+            <thead>
+            <tr style="text-align:center">
+                <th>ID</th>
+                <th>이미지</th>
+                <th>상품명</th>
+                <th>알람</th>
+                <th>가격</th>
+                <th>재고동향</th>
+                <th>재고</th>
+                <th><input type="checkbox" id="allCheckBox" onclick="allChecked()" class="form-check-input"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}" style="text-align:center">
+                <td><a href="item.html" th:href="@{/items/{itemId} (itemId=${item.id})}" id="id" th:text="${item.id}" name="id" th:value="${item.id}"></a></td>
+                <td><img th:src="@{${item.imgLink}}" width="50",height="50"/></td>
+                <td style="text-align:left"><a href="item.html" th:href="${item.link}" target="_blank" th:text="${item.itemName}">상품명</a></td>
+                <td><input type="button" class="btn btn-primary align-items-center"
+                            onclick="location.href='addForm.html'"
+                            th:onclick="|location.href='@{/items/{itemId}/changeAlarm (itemId=${item.id})}'|"
+                            th:if="${item.alarm}==true" th:value=활성중 style="background-color:red">
+                    <input type="button" class="btn btn-primary align-items-center"
+                           onclick="location.href='addForm.html'"
+                           th:onclick="|location.href='@{/items/{itemId}/changeAlarm (itemId=${item.id})}'|"
+                           th:if="${item.alarm}==false" th:value=비활성중></td>
+                <td th:text="${item.price}+원">가격</td>
+                <td><input type="button" class="btn btn-primary align-items-center"
+                           onclick="location.href='addForm.html'"
+                           th:onclick="|location.href='@{/items/{itemId}/getGraph (itemId=${item.id})}'|"
+                           th:value=그래프>
+                <td th:text="${item.quantity}" style="font-weight: 900">재고</td>
+                <td><input type="checkbox" name="chk" id="chk" onclick="chkClicked()" th:value="${item.id}" class="form-check-input"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
