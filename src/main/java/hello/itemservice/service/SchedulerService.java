@@ -24,7 +24,7 @@ public class SchedulerService {
     @Value("${telegram-bot-key}")
     private String telegram_bot_key;
 
-    @Scheduled(fixedDelay = 300000) // 5분마다 실행
+    @Scheduled(fixedDelay = 60000) // 5분마다 실행
     public void run() {
         List<Item> items = itemService.findItems(new ItemSearchCond());
         for (Item item : items) {
