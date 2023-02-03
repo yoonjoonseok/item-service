@@ -11,6 +11,13 @@
 <script type="text/javascript">
    $(document).ready(function(){
       $("#table").tablesorter();
+      $("#keyword").keyup(function() {
+                var k = $(this).val();
+                $("#table > tbody > tr").hide();
+                var temp = $("#table > tbody > tr > td:nth-child(8n+3):contains('" + k + "')");
+
+                $(temp).parent().show();
+            });
    });
 </script>
 <body>
@@ -47,6 +54,9 @@
     </div>
     <hr class="my-4">
     <div class="container" style="max-width: 1200px">
+        <div class="col">
+            <input type="text" id="keyword" class="form-control" placeholder="상품 검색"/>
+        </div>
         <table id="table" class="table">
             <thead>
             <tr style="text-align:center">
